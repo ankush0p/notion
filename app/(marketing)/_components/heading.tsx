@@ -26,7 +26,7 @@ export const Heading = () => {
       {isAuthenticated && !isLoading && (
         <Button asChild>
           <Link href="/documents">
-            Enter Jotion
+            Enter Documents
             <ArrowRight className="h-4 w-4 ml-2" />
           </Link>
         </Button>
@@ -34,7 +34,7 @@ export const Heading = () => {
       {!isAuthenticated && !isLoading && (
         <SignInButton mode="modal">
           <Button>
-            Get Jotion free
+            Get Document free
             <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
         </SignInButton>
