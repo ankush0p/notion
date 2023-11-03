@@ -8,6 +8,7 @@ import { useMutation } from "convex/react";
 
 import { cn } from "@/lib/utils";
 import { UserItem } from "./user-item";
+import { useSearch } from "@/hooks/use-search";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { Item } from "./item";
@@ -20,6 +21,7 @@ export const Navigation = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");  
   const create = useMutation(api.documents.create);
   const isResizingRef = useRef(false);
+  const search = useSearch();
   const sidebarRef = useRef<ElementRef<"aside">>(null);
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
@@ -108,7 +110,7 @@ export const Navigation = () => {
         </div>
         <div>
           <UserItem />
-          <Item label="Search" icon={Search} isSearch onClick={() => {}} />
+          <Item label="Search" icon={Search} isSearch onClick={search.onOpen} />
           <Item label="Settings" icon={Settings} onClick={() => {}} />
           <Item onClick={handleCreate} label="New page" icon={PlusCircle} />
         </div>
