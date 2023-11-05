@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Logo } from "./logo";
+import { Button } from "@/components/ui/button"
+
+import { Logo } from "./logo"
 
 export const Footer = () => {
   return (
@@ -14,5 +15,5 @@ export const Footer = () => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}

@@ -1,13 +1,15 @@
 "use client";
 
-import { Doc, Id } from "@/convex/_generated/dataModel";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { Item } from "./item";
-import { cn } from "@/lib/utils";
 import { FileIcon } from "lucide-react";
+
+import { Doc, Id } from "@/convex/_generated/dataModel";
+import { api } from "@/convex/_generated/api";
+import { cn } from "@/lib/utils";
+
+import { Item } from "./item";
 
 interface DocumentListProps {
   parentDocumentId?: Id<"documents">;
@@ -15,20 +17,23 @@ interface DocumentListProps {
   data?: Doc<"documents">[];
 }
 
-export const DocumentList = ({ parentDocumentId, level = 0 }: DocumentListProps) => {
+export const DocumentList = ({
+  parentDocumentId,
+  level = 0
+}: DocumentListProps) => {
   const params = useParams();
   const router = useRouter();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   const onExpand = (documentId: string) => {
-    setExpanded((prevExpanded) => ({
+    setExpanded(prevExpanded => ({
       ...prevExpanded,
-      [documentId]: !prevExpanded[documentId],
+      [documentId]: !prevExpanded[documentId]
     }));
   };
 
   const documents = useQuery(api.documents.getSidebar, {
-    parentDocument: parentDocumentId,
+    parentDocument: parentDocumentId
   });
 
   const onRedirect = (documentId: string) => {
@@ -47,11 +52,20 @@ export const DocumentList = ({ parentDocumentId, level = 0 }: DocumentListProps)
         )}
       </>
     );
-  }
+  };
 
   return (
     <>
-      <p style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }} className={cn("hidden text-sm font-medium text-muted-foreground/80", expanded && "last:block", level === 0 && "hidden")}>
+      <p
+        style={{
+          paddingLeft: level ? `${(level * 12) + 25}px` : undefined
+        }}
+        className={cn(
+          "hidden text-sm font-medium text-muted-foreground/80",
+          expanded && "last:block",
+          level === 0 && "hidden"
+        )}
+      >
         No pages inside
       </p>
       {documents.map((document) => (
@@ -67,7 +81,12 @@ export const DocumentList = ({ parentDocumentId, level = 0 }: DocumentListProps)
             onExpand={() => onExpand(document._id)}
             expanded={expanded[document._id]}
           />
-          {expanded[document._id] && <DocumentList parentDocumentId={document._id} level={level + 1} />}
+          {expanded[document._id] && (
+            <DocumentList
+              parentDocumentId={document._id}
+              level={level + 1}
+            />
+          )}
         </div>
       ))}
     </>
